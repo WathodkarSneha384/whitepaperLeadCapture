@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# EdgeAI Whitepaper Lead Capture
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive React application that allows users to download the **Edge AI executive brief** after submitting their details. The app captures the form data and generates a properly paginated PDF using **html2pdf.js**.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[View on Vercel](https://whitepaper-lead-capture-b18z.vercel.app/)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Responsive design (mobile and desktop friendly)  
+- Form validation for:
+  - Full Name
+  - Email
+  - Company
+  - Job Title  
+- Generates downloadable PDF of the whitepaper content  
+- Multi-page PDF with proper page breaks and styling  
+- "Download White Paper" button disables after the first download  
+- Frontend-only application (no backend required)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Setup / Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Node.js (v18+ recommended)  
+- npm or yarn
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Clone the repository**  
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+cd YOUR_REPO
+
+### Install dependencies
+npm install
+
+###Run the development server
+
+npm run dev
+
+### Open
+http://localhost:5173
+
+
+### Build for production
+
+npm run build
+
+### Folder Structure
+whitepaper-lead-capture/
+├─ public/                # Static assets
+├─ src/
+│  ├─ App.tsx             # Main React app
+│  ├─ style.css           # Global styles
+│  ├─ App.css             # Component-specific styles
+├─ package.json
+├─ tsconfig.json
+├─ vite.config.ts
+└─ README.md
+
+###Frameworks / Tools Used
+
+React 19 – Frontend UI
+
+TypeScript – Type safety
+
+Vite – Development and build tool
+
+html2pdf.js – HTML to PDF conversion
+
+html2canvas – Capture HTML elements as canvas
+
+jsPDF – PDF generation and page handling
+
+###Usage
+
+Fill out the form with your Full Name, Email, Company, and Job Title.
+
+Click Get the White Paper.
+
+Once ready, click Download White Paper.
+
+The generated PDF contains the full whitepaper with proper pagination.
