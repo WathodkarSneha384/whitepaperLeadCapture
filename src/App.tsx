@@ -81,12 +81,23 @@ export default function App(): JSX.Element {
 
   try {
     // Capture the content as canvas
-    const canvas = await html2canvas(element, {
-      scale: 2,          // higher scale = better resolution
-      useCORS: true,     // for external images
-      scrollY: -window.scrollY,
-      allowTaint: true,
-    });
+   const canvas = await html2canvas(element, {
+  scale: 2,
+  useCORS: true,
+  scrollY: 0,
+  windowWidth: element.scrollWidth,
+  windowHeight: element.scrollHeight,
+  onclone: (clonedDoc) => {
+    // Ensure page-break styles are applied in cloned DOM
+  clonedDoc.querySelectorAll('.page-break').forEach((el) => {
+  const element = el as HTMLElement;
+  if (element && element.style) {
+    element.style.breakBefore = 'page';
+    element.style.pageBreakBefore = 'always';
+  }
+});
+  },
+});
 
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");

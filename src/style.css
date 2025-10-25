@@ -1,5 +1,6 @@
-/* style.css */
-
+/* ==========================
+   Base Styles
+========================== */
 html, body, #root, .root {
   margin: 0;
   padding: 0;
@@ -10,8 +11,6 @@ html, body, #root, .root {
   flex-direction: column;
   overflow-x: hidden; /* prevent horizontal scroll */
 }
-
-
 
 .page {
   min-height: 100vh;
@@ -194,26 +193,149 @@ html, body, #root, .root {
   font-size: 0.9rem;
 }
 
-/* Responsive Design */
+/* ==========================
+   Responsive Design
+========================== */
+
+/* Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  #root {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .layout {
+    gap: 30px;
+    padding: 15px;
+  }
+
+  .summary h1 {
+    font-size: 2rem;
+  }
+
+  .summary h2 {
+    font-size: 1.5rem;
+  }
+
+  .summary .lead {
+    font-size: 1.1rem;
+  }
+
+  .formPanel {
+    padding: 25px;
+  }
+
+  .btn {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
+
+/* Mobile (≤768px) */
 @media (max-width: 768px) {
+  #root {
+    padding: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .layout {
     flex-direction: column;
     gap: 20px;
-    padding: 10px; /* reduce padding */
-    max-width: 100%; /* take full width */
-    margin: 0; /* remove auto margin */
+    padding: 10px;
+    max-width: 100%;
+    margin: 0;
   }
 
   .summary, .formPanel {
-    flex: none;
-    width: 100%; /* take full width */
-    padding: 20px; /* adjust padding */
-    box-sizing: border-box; /* ensure padding doesn't add to width */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
-  .summary .lead,
-  .summary p,
-  .summary ul {
-    margin-left: 0; /* remove left margin */
+  .summary h1 {
+    font-size: 1.8rem;
+  }
+
+  .summary h2 {
+    font-size: 1.3rem;
+  }
+
+  .summary .lead {
+    font-size: 1rem;
+    margin-left: 0;
+  }
+
+  .summary p, .summary ul {
+    margin-left: 0;
+  }
+
+  .formPanel h2 {
+    font-size: 1.4rem;
+  }
+
+  .field label {
+    font-size: 0.95rem;
+  }
+
+  .field input {
+    padding: 8px;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .footer {
+    padding: 15px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Small Mobile (≤480px) */
+@media (max-width: 480px) {
+  #root {
+    padding: 8px;
+    flex-direction: column;
+  }
+
+  .layout {
+    padding: 8px;
+  }
+
+  .summary {
+    padding: 15px;
+  }
+
+  .formPanel {
+    padding: 15px;
+  }
+
+  .summary h1 {
+    font-size: 1.6rem;
+  }
+
+  .summary h2 {
+    font-size: 1.1rem;
+  }
+
+  .summary .lead {
+    font-size: 0.95rem;
+  }
+
+  .field input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .footer {
+    font-size: 0.8rem;
   }
 }
