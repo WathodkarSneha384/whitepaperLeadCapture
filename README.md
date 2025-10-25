@@ -35,8 +35,8 @@ A responsive React application that allows users to download the **Edge AI execu
 1. **Clone the repository**  
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd YOUR_REPO
+git clone https://github.com/WathodkarSneha384/whitepaperLeadCapture.git
+cd whitepaperLeadCapture
 
 ### Install dependencies
 npm install
