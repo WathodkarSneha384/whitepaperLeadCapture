@@ -119,7 +119,7 @@ const generatePDF = async () => {
             name="fullName"
             value={form.fullName}
             onChange={handleChange}
-            placeholder="Jane Doe"
+            placeholder="Ex: Jane Doe"
             required
           />
           {errors.fullName && <div className="error">{errors.fullName}</div>}
@@ -133,7 +133,7 @@ const generatePDF = async () => {
             type="email"
             value={form.email}
             onChange={handleChange}
-            placeholder="name@company.com"
+            placeholder="Ex: name@company.com"
             required
           />
           {errors.email && <div className="error">{errors.email}</div>}
@@ -146,7 +146,7 @@ const generatePDF = async () => {
             name="company"
             value={form.company}
             onChange={handleChange}
-            placeholder="Acme, Inc."
+            placeholder="Ex: Acme, Inc."
             required
           />
           {errors.company && <div className="error">{errors.company}</div>}
@@ -159,7 +159,7 @@ const generatePDF = async () => {
             name="jobTitle"
             value={form.jobTitle}
             onChange={handleChange}
-            placeholder="Product Manager"
+            placeholder="Ex: Product Manager"
             required
           />
           {errors.jobTitle && <div className="error">{errors.jobTitle}</div>}

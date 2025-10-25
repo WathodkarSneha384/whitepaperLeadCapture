@@ -79,6 +79,8 @@ html2canvas – Capture HTML elements as canvas
 
 jsPDF – PDF generation and page handling
 
+font-family - 'Roboto', sans-serif;
+
 ###Usage
 
 Fill out the form with your Full Name, Email, Company, and Job Title.
