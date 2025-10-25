@@ -73,31 +73,17 @@ export default function App(): JSX.Element {
   const element = pdfRef.current;
   if (!element) return;
 
-  // Temporarily hide the form (TypeScript-safe)
   const forms = document.querySelectorAll(".formPanel");
-  forms.forEach(f => {
-    (f as HTMLElement).style.display = "none";
-  });
+  forms.forEach(f => (f as HTMLElement).style.display = "none");
 
   try {
-    // Capture the content as canvas
-   const canvas = await html2canvas(element, {
-  scale: 2,
-  useCORS: true,
-  scrollY: 0,
-  windowWidth: element.scrollWidth,
-  windowHeight: element.scrollHeight,
-  onclone: (clonedDoc) => {
-    // Ensure page-break styles are applied in cloned DOM
-  clonedDoc.querySelectorAll('.page-break').forEach((el) => {
-  const element = el as HTMLElement;
-  if (element && element.style) {
-    element.style.breakBefore = 'page';
-    element.style.pageBreakBefore = 'always';
-  }
-});
-  },
-});
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      scrollY: 0,
+      windowWidth: element.scrollWidth,
+      windowHeight: element.scrollHeight,
+    });
 
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
@@ -111,29 +97,23 @@ export default function App(): JSX.Element {
     let heightLeft = imgHeight;
     let position = 0;
 
-    // Add the first page
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pdfHeight;
-
-    // Add additional pages if needed
     while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
       pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
       heightLeft -= pdfHeight;
+      position -= pdfHeight;
+      if (heightLeft > 0) pdf.addPage();
     }
 
-    // Save the PDF
-    pdf.save("EdgeAI_Whitepaper.pdf");
+   pdf.save("EdgeAI_Whitepaper.pdf");
+setDownloaded(true); 
+
   } catch (err) {
     console.error("Error generating PDF:", err);
   } finally {
-    // Restore the form display after PDF generation
-    forms.forEach(f => {
-      (f as HTMLElement).style.display = "";
-    });
+    forms.forEach(f => (f as HTMLElement).style.display = "");
   }
 };
+
 
 
 
@@ -211,14 +191,14 @@ export default function App(): JSX.Element {
         </div>
       )}
 
-      {downloadVisible && (
-        <div className="downloadPanel" role="status" aria-live="polite">
-          <p className="success">Thanks! Your download is ready.</p>
-          <button className="downloadLink" onClick={generatePDF} disabled={downloaded}>
-            {downloaded ? "Downloaded" : "Download White Paper"}
-          </button>
-        </div>
-      )}
+      {downloadVisible && !downloaded && (
+  <div className="downloadPanel" role="status" aria-live="polite">
+    <p className="success">Thanks! Your download is ready.</p>
+    <button className="downloadLink" onClick={generatePDF}>
+      Download White Paper
+    </button>
+  </div>
+)}
     </aside>
   );
 
