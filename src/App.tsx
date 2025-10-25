@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, type JSX } from "react";
 import "./style.css";
 import "./App.css";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+
+import html2pdf from "html2pdf.js";
 
 type FormState = {
   fullName: string;
@@ -69,48 +69,35 @@ export default function App(): JSX.Element {
     }, 700);
   }
 
- const generatePDF = async () => {
+const generatePDF = async () => {
   const element = pdfRef.current;
   if (!element) return;
 
+  // Temporarily hide the form
   const forms = document.querySelectorAll(".formPanel");
   forms.forEach(f => (f as HTMLElement).style.display = "none");
 
+  element.classList.add("print-mode"); // For print-specific CSS
+
   try {
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      scrollY: 0,
-      windowWidth: element.scrollWidth,
-      windowHeight: element.scrollHeight,
-    });
+    await html2pdf()
+      .set({
+        margin: 10,
+        filename: "EdgeAI_Whitepaper.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, scrollY: 0 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      })
+      .from(element)
+      .save();
 
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-
-    const imgWidth = pdfWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    while (heightLeft > 0) {
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
-      position -= pdfHeight;
-      if (heightLeft > 0) pdf.addPage();
-    }
-
-   pdf.save("EdgeAI_Whitepaper.pdf");
-setDownloaded(true); 
-
+    setDownloaded(true);
   } catch (err) {
     console.error("Error generating PDF:", err);
   } finally {
+    // Restore form display
     forms.forEach(f => (f as HTMLElement).style.display = "");
+    element.classList.remove("print-mode");
   }
 };
 
