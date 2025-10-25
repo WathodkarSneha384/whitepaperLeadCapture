@@ -69,20 +69,31 @@ export default function App(): JSX.Element {
     }, 700);
   }
 
-  // Generate styled PDF using html2canvas + jsPDF
-    // Generate multipage styled PDF using html2canvas + jsPDF
-  const generatePDF = async () => {
-    if (!pdfRef.current) return;
-    const element = pdfRef.current;
+ const generatePDF = async () => {
+  const element = pdfRef.current;
+  if (!element) return;
+
+  // Temporarily hide the form (TypeScript-safe)
+  const forms = document.querySelectorAll(".formPanel");
+  forms.forEach(f => {
+    (f as HTMLElement).style.display = "none";
+  });
+
+  try {
+    // Capture the content as canvas
     const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      scrollY: -window.scrollY, // capture full viewport
+      scale: 2,          // higher scale = better resolution
+      useCORS: true,     // for external images
+      scrollY: -window.scrollY,
+      allowTaint: true,
     });
+
     const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
+
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
+
     const imgWidth = pdfWidth;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
@@ -93,7 +104,7 @@ export default function App(): JSX.Element {
     pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
     heightLeft -= pdfHeight;
 
-    // Add additional pages as needed
+    // Add additional pages if needed
     while (heightLeft > 0) {
       position = heightLeft - imgHeight;
       pdf.addPage();
@@ -101,10 +112,20 @@ export default function App(): JSX.Element {
       heightLeft -= pdfHeight;
     }
 
-    pdf.save("whitepaper.pdf");
-     setDownloaded(true);
-    setDownloadVisible(false);
-  };
+    // Save the PDF
+    pdf.save("EdgeAI_Whitepaper.pdf");
+  } catch (err) {
+    console.error("Error generating PDF:", err);
+  } finally {
+    // Restore the form display after PDF generation
+    forms.forEach(f => {
+      (f as HTMLElement).style.display = "";
+    });
+  }
+};
+
+
+
 
 
   // Shared Form Component

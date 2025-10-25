@@ -1,5 +1,17 @@
 /* style.css */
 
+html, body, #root, .root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: "Inter", Arial, sans-serif;
+  background-color: #f5f7fa;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+
 
 .page {
   min-height: 100vh;
@@ -187,17 +199,21 @@
   .layout {
     flex-direction: column;
     gap: 20px;
+    padding: 10px; /* reduce padding */
+    max-width: 100%; /* take full width */
+    margin: 0; /* remove auto margin */
   }
 
   .summary, .formPanel {
     flex: none;
+    width: 100%; /* take full width */
+    padding: 20px; /* adjust padding */
+    box-sizing: border-box; /* ensure padding doesn't add to width */
   }
 
-  .summary h1 {
-    font-size: 2rem;
-  }
-
-  .summary h2 {
-    font-size: 1.5rem;
+  .summary .lead,
+  .summary p,
+  .summary ul {
+    margin-left: 0; /* remove left margin */
   }
 }
